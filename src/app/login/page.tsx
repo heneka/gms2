@@ -85,7 +85,7 @@ export default function LoginPage() {
     }
 
     // Real API mode
-    const apiUrl = `${API_BASE}/api/auth/login`;
+    const apiUrl = `${API_BASE}/auth/login`;
     const requestData = { email, password };
 
     try {
