@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Outer circle with white border -->
+  <circle cx="100" cy="100" r="98" fill="#B71C1C" stroke="#FFFFFF" stroke-width="4"/>
+  
+  <!-- Inner white circle for text -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- University name text (curved) -->
+  <defs>
+    <path id="top-curve" d="M 30 100 A 70 70 0 0 1 170 100"/>
+    <path id="bottom-curve" d="M 170 100 A 70 70 0 0 1 30 100"/>
+  </defs>
+  
+  <text font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">
+    <textPath href="#top-curve" startOffset="50%" text-anchor="middle">
+      IZMIR INSTITUTE OF TECHNOLOGY
+    </textPath>
+  </text>
+  
+  <!-- Central logo design -->
+  <g transform="translate(100,100)">
+    <!-- Central cross/star pattern -->
+    <g stroke="#FFFFFF" stroke-width="3" fill="none">
+      <!-- Vertical lines -->
+      <line x1="0" y1="-25" x2="0" y2="-15"/>
+      <line x1="0" y1="-10" x2="0" y2="-5"/>
+      <line x1="0" y1="5" x2="0" y2="10"/>
+      <line x1="0" y1="15" x2="0" y2="25"/>
+      
+      <!-- Horizontal lines -->
+      <line x1="-25" y1="0" x2="-15" y2="0"/>
+      <line x1="-10" y1="0" x2="-5" y2="0"/>
+      <line x1="5" y1="0" x2="10" y2="0"/>
+      <line x1="15" y1="0" x2="25" y2="0"/>
+      
+      <!-- Diagonal lines -->
+      <line x1="-18" y1="-18" x2="-12" y2="-12"/>
+      <line x1="-8" y1="-8" x2="-3" y2="-3"/>
+      <line x1="3" y1="3" x2="8" y2="8"/>
+      <line x1="12" y1="12" x2="18" y2="18"/>
+      
+      <line x1="18" y1="-18" x2="12" y2="-12"/>
+      <line x1="8" y1="-8" x2="3" y2="-3"/>
+      <line x1="-3" y1="3" x2="-8" y2="8"/>
+      <line x1="-12" y1="12" x2="-18" y2="18"/>
+    </g>
+  </g>
+  
+  <!-- Year -->
+  <text x="100" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">1992</text>
+  
+  <!-- Two dots -->
+  <circle cx="40" cy="175" r="3" fill="#FFFFFF"/>
+  <circle cx="160" cy="175" r="3" fill="#FFFFFF"/>
+</svg> 
