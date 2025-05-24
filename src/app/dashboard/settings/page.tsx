@@ -6,9 +6,7 @@ import { useRouter } from 'next/navigation'
 import DashboardLayout from '@/components/DashboardLayout'
 import { 
   Settings as SettingsIcon, 
-  Shield, 
   Calendar, 
-  Users,
   FileText,
   Bell,
   Database,

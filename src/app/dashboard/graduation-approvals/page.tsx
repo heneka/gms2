@@ -6,18 +6,12 @@ import DashboardLayout from '@/components/DashboardLayout'
 import { 
   Award, 
   CheckCircle, 
-  Clock, 
   AlertCircle,
   Eye,
   FileText,
-  Calendar,
   Download,
-  Printer,
-  GraduationCap,
   User,
-  Shield,
-  Stamp,
-  BookOpen
+  Shield
 } from 'lucide-react'
 
 interface GraduationApproval {
@@ -196,7 +190,7 @@ export default function GraduationApprovalsPage() {
     } finally {
       setLoading(false)
     }
-  }, [filter])
+  }, [])
 
   useEffect(() => {
     fetchApprovals()

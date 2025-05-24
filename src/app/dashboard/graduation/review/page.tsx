@@ -24,7 +24,7 @@ const ReviewPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [generalSubmitError, setGeneralSubmitError] = useState<string | null>(null);
 
-  const authorizedRoles: UserRole[] = useMemo(() => ['ADVISOR', 'DEPARTMENT_SECRETARY', 'DEANERY'], []);
+  const authorizedRoles: UserRole[] = useMemo(() => ['ADVISOR', 'SECRETARY', 'DEAN'], []);
 
   const fetchApps = useCallback(async () => {
     try {

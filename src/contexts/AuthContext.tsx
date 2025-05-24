@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         const userData = JSON.parse(storedUser);
         setUser(userData);
-      } catch (error) {
+      } catch {
         localStorage.removeItem('authToken');
         localStorage.removeItem('currentUser');
       }

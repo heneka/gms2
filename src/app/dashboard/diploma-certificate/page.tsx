@@ -5,15 +5,10 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import DashboardLayout from '@/components/DashboardLayout'
 import { 
-  FileCheck, 
-  Clock, 
   CheckCircle, 
-  AlertCircle,
   Calendar,
-  MapPin,
   Send,
   Download,
-  Filter,
   Search,
   Award,
   FileText,
@@ -274,7 +269,7 @@ export default function DiplomaCertificatePage() {
     }
   }
 
-  const filterRequests = (requests: any[]) => {
+  const filterRequests = <T extends DiplomaRequest | CertificateRequest>(requests: T[]): T[] => {
     return requests.filter(request => {
       const matchesSearch = searchTerm === '' || 
         request.student.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||

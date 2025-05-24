@@ -9,7 +9,7 @@ import {
   GraduationDocument,
   ApprovalStep
 } from '../../../../lib/services/graduationService'; // Adjusted import path
-import { useAuth, UserRole } from '../../../../contexts/AuthContext'; // Import useAuth and UserRole
+import { useAuth } from '../../../../contexts/AuthContext'; // Import useAuth
 
 interface GraduationApplication {
   id: string;
@@ -25,7 +25,7 @@ interface GraduationApplication {
 }
 
 const ApplyPage = () => {
-  const { user, isLoading, _setUserManually } = useAuth(); // Use the auth context
+  const { user, isLoading } = useAuth(); // Use the auth context
   const [application, setApplication] = useState<GraduationApplication | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loadingData, setLoadingData] = useState<boolean>(true);
@@ -120,18 +120,6 @@ const ApplyPage = () => {
     }
   };
 
-  // --- Temporary Role Switcher for Testing ---
-  const availableRoles: UserRole[] = ['STUDENT', 'ADVISOR', 'DEPARTMENT_SECRETARY', 'DEANERY', 'RECTORATE', 'GUEST'];
-  const handleRoleChange = (newRole: UserRole) => {
-    if (user) {
-      _setUserManually({ ...user, role: newRole });
-    } else {
-      // If no user, create a dummy one for testing
-      _setUserManually({ id: 'test-user', email: 'test@example.com', role: newRole });
-    }
-  };
-  // --- End Temporary Role Switcher ---
-
   if (isLoading || (loadingData && user?.role === 'STUDENT')) {
     return <div className="container mx-auto p-4">Loading authentication status or application data...</div>;
   }
@@ -140,33 +128,14 @@ const ApplyPage = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Graduation Application</h1>
       
-      {/* --- Temporary Role Switcher UI --- */}
-      <div className="mb-6 p-4 border border-gray-300 rounded bg-gray-50">
-        <h3 className="text-lg font-semibold">Test User Role Switcher</h3>
-        <p className="text-sm text-gray-600 mb-2">Current Role: <span className="font-bold text-blue-600">{user?.role || 'N/A'}</span> (User ID: {user?.id || 'N/A'})</p>
-        <div className="flex space-x-2 flex-wrap">
-          {availableRoles.map(role => (
-            <button 
-              key={role} 
-              onClick={() => handleRoleChange(role)}
-              className={`px-3 py-1 rounded text-sm mb-1 mr-1 
-                ${user?.role === role ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-            >
-              Set to {role}
-            </button>
-          ))}
-        </div>
-      </div>
-      {/* --- End Temporary Role Switcher UI --- */}
-
       {error && <p className="text-red-500 bg-red-100 p-3 rounded mb-4">Error: {error}</p>}
 
       {!user || user.role !== 'STUDENT' ? (
         <div>
           <p className="text-xl text-orange-600">Access Denied.</p>
           <p>This page is for students to manage their graduation applications.</p>
-          {user && user.role !== 'GUEST' && <p>Your current role is: {user.role}.</p>}
-          {user && user.role === 'GUEST' && <p>Please log in to access this feature.</p>}
+          {user && <p>Your current role is: {user.role}.</p>}
+          {!user && <p>Please log in to access this feature.</p>}
         </div>
       ) : (
         // Student View

@@ -102,7 +102,7 @@ export default function GraduationPage() {
     } finally {
       setLoading(false)
     }
-  }, [filter])
+  }, [])
 
   const fetchApplicationPeriods = useCallback(async () => {
     try {

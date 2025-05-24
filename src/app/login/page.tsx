@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,7 +12,6 @@ export default function LoginPage() {
   const [debugInfo, setDebugInfo] = useState('');
   const [currentUrl, setCurrentUrl] = useState('Loading...');
   const { login } = useAuth();
-  const router = useRouter();
 
   // Fix hydration issue by getting current URL only on client side
   useEffect(() => {
@@ -108,7 +107,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <img className="h-12 w-auto" src="/iyte-logo.svg" alt="IYTE Logo" />
+          <Image className="h-12 w-auto" src="/iyte-logo.svg" alt="IYTE Logo" width={48} height={48} />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           IYTE Mezuniyet Yönetim Sistemi

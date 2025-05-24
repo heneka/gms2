@@ -9,11 +9,6 @@ import {
   Clock, 
   AlertCircle,
   Eye,
-  FileText,
-  Calendar,
-  Mail,
-  Phone,
-  GraduationCap,
   User
 } from 'lucide-react'
 
