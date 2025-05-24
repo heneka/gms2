@@ -101,13 +101,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export async function GET() {
+  return NextResponse.json({ message: 'Login API is working! Use POST method.' });
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function OPTIONS(_request: NextRequest) {
   return new NextResponse(null, {
     status: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     },
   });
