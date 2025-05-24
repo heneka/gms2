@@ -26,9 +26,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:5000' 
-  : 'http://localhost:5000';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+const MOCK_MODE = process.env.NEXT_PUBLIC_MOCK_MODE === 'true';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -64,17 +63,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
-    try {
-      await fetch(`${API_BASE}/api/auth/logout`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      });
-    } catch (error) {
-      console.error('Logout error:', error);
+    if (!MOCK_MODE) {
+      try {
+        await fetch(`${API_BASE}/api/auth/logout`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
     }
     
     localStorage.removeItem('authToken');

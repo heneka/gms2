@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, UserRole } from '@/contexts/AuthContext';
 import Image from 'next/image';
 
 export default function LoginPage() {
@@ -29,7 +29,8 @@ export default function LoginPage() {
     { role: 'ÖĞRENCİ İŞLERİ', email: 'studentaffairs@iyte.edu.tr', name: 'Fatma Şahin' }
   ];
 
-  const API_BASE = 'http://localhost:5000';
+  const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000';
+  const MOCK_MODE = process.env.NEXT_PUBLIC_MOCK_MODE === 'true';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +38,53 @@ export default function LoginPage() {
     setError('');
     setDebugInfo('');
 
+    // Mock mode for production without backend
+    if (MOCK_MODE) {
+      try {
+        setDebugInfo('Mock mode aktif - demo hesap kontrolleri yapılıyor...');
+        
+        // Find demo account
+        const demoAccount = demoAccounts.find(acc => acc.email === email);
+        if (!demoAccount || password !== '123456') {
+          throw new Error('Geçersiz e-posta veya şifre');
+        }
+
+        // Create mock user data
+        const mockUserData = {
+          id: Date.now(),
+          name: demoAccount.name,
+          email: demoAccount.email,
+          role: (demoAccount.role === 'ÖĞRENCİ' ? 'STUDENT' :
+                demoAccount.role === 'DANIŞMAN' ? 'ADVISOR' :
+                demoAccount.role === 'SEKRETERLİK' ? 'SECRETARY' :
+                demoAccount.role === 'DEKANLIK' ? 'DEAN' : 'STUDENT_AFFAIRS') as UserRole,
+          department: demoAccount.role === 'ÖĞRENCİ' ? 'Bilgisayar Mühendisliği' :
+                     demoAccount.role === 'DANIŞMAN' ? 'Bilgisayar Mühendisliği' :
+                     demoAccount.role === 'SEKRETERLİK' ? 'Bilgisayar Mühendisliği' :
+                     demoAccount.role === 'DEKANLIK' ? 'Mühendislik Fakültesi' : 'Öğrenci İşleri Daire Başkanlığı',
+          faculty: demoAccount.role === 'DEKANLIK' ? 'Mühendislik Fakültesi' : 
+                   demoAccount.role === 'ÖĞRENCİ İŞLERİ' ? 'Rektörlük (Yönetim Birimi)' : 'Mühendislik Fakültesi',
+          studentId: demoAccount.role === 'ÖĞRENCİ' ? '190201001' : undefined
+        };
+
+        const mockToken = `demo-jwt-token-${Date.now()}`;
+        
+        setDebugInfo('Mock login başarılı, token ve user kaydediliyor...');
+        await login(mockToken, mockUserData);
+        setDebugInfo('Mock token kaydedildi, dashboard\'a yönlendiriliyor...');
+        
+        window.location.href = '/dashboard';
+        return;
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Bilinmeyen hata';
+        setError(`Mock Login Hatası: ${errorMessage}`);
+        setDebugInfo(`Mock hata: ${errorMessage}`);
+        setIsLoading(false);
+        return;
+      }
+    }
+
+    // Real API mode
     const apiUrl = `${API_BASE}/api/auth/login`;
     const requestData = { email, password };
 
@@ -107,7 +155,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <Image className="h-12 w-auto" src="/iyte-logo.svg" alt="IYTE Logo" width={48} height={48} />
+          <Image className="h-12 w-auto" src="/iyte-logo.png" alt="IYTE Logo" width={48} height={48} />
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           IYTE Mezuniyet Yönetim Sistemi

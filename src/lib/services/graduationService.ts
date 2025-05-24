@@ -1,6 +1,6 @@
 // This file will contain functions to interact with the backend graduation APIs
 
-const API_BASE_URL = 'http://localhost:3001/api'; // Directly set for development
+const API_BASE_URL = 'http://localhost:5000/api'; // Reverted back to port 5000
 
 // Helper to get the auth token (assuming it's stored in localStorage or a similar place)
 // In a real app, this would come from your auth context/state management

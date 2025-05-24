@@ -126,7 +126,7 @@ export default function DashboardLayout({ children, currentPage = 'dashboard' }:
         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
           <div className="flex items-center">
             <Image
-              src="/iyte-logo.svg"
+              src="/iyte-logo.png"
               alt="IYTE Logo"
               width={32}
               height={32}
